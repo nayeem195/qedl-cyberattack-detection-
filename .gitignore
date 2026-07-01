@@ -1,0 +1,21 @@
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+*.egg-info/
+.venv/
+venv/
+env/
+
+# data (large, not tracked)
+data/*.csv
+data/*.parquet
+
+# results / model artifacts
+results/
+*.keras
+*.h5
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/

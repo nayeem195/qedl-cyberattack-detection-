@@ -1,0 +1,44 @@
+# QEDL configuration
+# Values below reflect the settings reported in the paper
+# (Section 6, Simulation Setup).
+
+data:
+  path: "data/cicids2017.csv"       # path to a CIC-IDS2017 / UNSW-NB15 style CSV
+  target_column: "Label"
+  test_size: 0.15
+  val_size: 0.15
+  random_state: 42
+
+qfs:
+  n_qubits: 10          # number of qubits used to represent the QAOA search space
+  target_features: 12   # desired size of the reduced feature subset (10-12 in the paper)
+  qaoa_layers: 3         # number of QAOA (p) layers
+  qaoa_steps: 150        # optimizer iterations for (gamma, beta)
+  qaoa_lr: 0.1
+  redundancy_weight: 0.5 # tradeoff between relevance and redundancy in the QUBO cost
+  threshold: 0.0          # tau, oracle-style cutoff (kept for reference / Grover-style scoring)
+
+pqc:
+  n_qubits: 10           # ansatz register size (n in the paper, matches d selected features)
+  layers: 3              # L, hardware-efficient ansatz depth (3-5 in the paper)
+  encoding: "angle"      # "angle" or "amplitude"
+
+model:
+  branch: "cnn"          # "cnn" for spatial inputs, "lstm" for sequential inputs
+  cnn_filters: [32, 64]
+  cnn_kernel_size: 3
+  lstm_units: 128
+  dense_units: 64
+  dropout: 0.3
+  num_classes: 5          # e.g. Benign, DoS, Botnet, Brute Force, PortScan
+
+train:
+  batch_size: 64
+  epochs: 100
+  learning_rate: 0.001
+  early_stopping_patience: 10
+  k_folds: 10
+
+output:
+  results_dir: "results"
+  model_dir: "results/saved_model"
